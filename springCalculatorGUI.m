@@ -1,7 +1,6 @@
 function springCalculatorGUI
     %% Create the main figure
-    fig = uifigure('Name', 'Spring Calculator', 'Position', [400, 300, 400, 275]);
-    %100, 100, 600, 400 - left, bottom, width, height
+    fig = uifigure('Name', 'Spring Calculator', 'Position', [400, 300, 400, 275]); %left, bottom, width, height
 
     % Create UI components
     % END TYPE
@@ -47,12 +46,14 @@ function springCalculatorGUI
         end
 
         % Call other functions to calculate and display results
-        totalCoils = calculateTotalCoils(endType, wireDiameter, solidLength);
-        activeCoils = calculateActiveCoils(endType, totalCoils);
+        %use round to ensure the outcome is an integer 
+        totalCoils = round(calculateTotalCoils(endType, wireDiameter, solidLength));
+        activeCoils = round(calculateActiveCoils(endType, totalCoils));
         pitch = calculatePitch(totalCoils, freeLength, wireDiameter, endType);
+        springRate = calculateSpringRate(wireDiameter, outerDiameter, activeCoils, material);
 
         % Display the results in a new figure
-        displayResultsFigure(totalCoils, activeCoils, pitch);
+        displayResultsFigure(totalCoils, activeCoils, pitch, springRate);
     end
 
     %% calculate total coils - Shigley Table 10-1
@@ -118,15 +119,74 @@ function springCalculatorGUI
         end
     end
 
+%% calculate spring rate k 
+    function springRate = calculateSpringRate(d, Do, Na, material)
+        springRate = 0;
+
+        %Do = outer diameter
+        D = (d + Do)/2; %mean diameter of the spring
+
+        % Use a switch statement to handle different materials 
+        switch material
+            case 'Music wire A228'
+                %Table 10-5 Shigley
+                if d < 0.8128
+                    G = 82.7; %Gpa
+                elseif d < 1.6256
+                    G = 81.7; %GPa
+                elseif d <= 3.175
+                    G = 81.0; %GPa
+                elseif d > 3.175
+                    G = 80.0; %GPa
+                end
+  
+            case 'Hard-drawn wire A227'
+                %Table 10-5 Shigley
+                if d < 0.8128
+                    G = 80.7; %Gpa
+                elseif d < 1.6256
+                    G = 80.0; %GPa
+                elseif d <= 3.175
+                    G = 79.3; %GPa
+                elseif d > 3.175
+                    G = 78.6; %GPa
+                end
+
+            case 'Chrome-vanadium wire A232' 
+                G = 77.2; %GPa
+
+            case 'Chrome-silicon wire A401'
+                G = 77.2; %GPa
+
+            case '302 stainless wire A313'
+                G = 69.0; %GPa
+
+            case 'Phosphor-bronze wire B159'
+                G = 41.4; %GPa
+        end
+
+        springRate = d^4 * G / (8 * D^3 * Na); %k
+
+    end
+
+%% calculate force 
+% UNCOMPLETED 
+%FROM PDF: 
+% — The force needed to compress the spring to its solid length and the factor of safety for static yielding
+% when the spring is compressed to this length
+% For a static load, the Spring Calculator should find the factor of safety.
+% For a cyclic load (i.e., Fmax and Fmin), the Spring Calculator should find the factor of safety for infinite life.
+
  %% Display the results in a new figure
-    function displayResultsFigure(totalCoils, activeCoils, pitch)
+    function displayResultsFigure(totalCoils, activeCoils, pitch, springRate)
         % Create a new figure
         resultsFig = uifigure('Name', 'Spring Results', 'Position', [600, 300, 300, 150]);
         clf(resultsFig);
 
         % Create uicontrols to display the results
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 100, 250, 20], 'String', ['Total Coils (Nt): ' num2str(totalCoils)]);
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 70, 250, 20], 'String', ['Active Coils (Na): ' num2str(activeCoils)]);
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 40, 250, 20], 'String', ['Pitch (p): ' num2str(pitch)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 100, 250, 20], 'String', ['Total Coils, Nt: ' num2str(totalCoils)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 70, 250, 20], 'String', ['Active Coils, Na: ' num2str(activeCoils)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 40, 250, 20], 'String', ['Pitch, p [mm]: ' num2str(pitch)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 10, 250, 20], 'String', ['Spring Rate, k [N/m]: ' num2str(springRate)]); %check units in the function 
     end
 end

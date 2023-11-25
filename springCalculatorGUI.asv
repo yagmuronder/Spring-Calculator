@@ -47,9 +47,12 @@ function springCalculatorGUI
         end
 
         % Call other functions to calculate and display results
-        totalCoils = calculateTotalCoils(endType, wireDiameter, solidLength);
-        activeCoils = calculateActiveCoils(totalCoils);
-        pitch = calculatePitch(totalCoils, freeLength, wireDiameter);
+        %use round to ensure the outcome is an integer 
+        totalCoils = round(calculateTotalCoils(endType, wireDiameter, solidLength));
+        activeCoils = round(calculateActiveCoils(endType, totalCoils));
+        pitch = calculatePitch(totalCoils, freeLength, wireDiameter, endType);
+        springRate = calculateSpringRate(wireDiameter, outerDiameter, activeCoils, mater)
+        (d, Do, Na, material)
 
         % Display the results in a new figure
         displayResultsFigure(totalCoils, activeCoils, pitch);
@@ -98,7 +101,7 @@ function springCalculatorGUI
     end
 
     %% calculate pitch - Shigley Table 10-1
-    function pitch = calculatePitch(Na, L0, d)
+    function pitch = calculatePitch(Na, L0, d, endType)
         % Default value, in case the end type is not recognized
         pitch = 0;
     
@@ -118,15 +121,65 @@ function springCalculatorGUI
         end
     end
 
+%% calculate spring rate k 
+    function springRate = calculateSpringRate(d, Do, Na, material)
+        springRate = 0;
+
+        %Do = outer diameter
+        D = (d + Do)/2; %mean diameter of the spring
+
+        % Use a switch statement to handle different materials 
+        switch material
+            case 'Music wire A228'
+                %Table 10-5 Shigley
+                if d < 0.8128
+                    G = 82.7; %Gpa
+                elseif d < 1.6256
+                    G = 81.7; %GPa
+                elseif d <= 3.175
+                    G = 81.0; %GPa
+                elseif d > 3.175
+                    G = 80.0; %GPa
+                end
+  
+            case 'Hard-drawn wire A227'
+                %Table 10-5 Shigley
+                if d < 0.8128
+                    G = 80.7; %Gpa
+                elseif d < 1.6256
+                    G = 80.0; %GPa
+                elseif d <= 3.175
+                    G = 79.3; %GPa
+                elseif d > 3.175
+                    G = 78.6; %GPa
+                end
+
+            case 'Chrome-vanadium wire A232' 
+                G = 77.2; %GPa
+
+            case 'Chrome-silicon wire A401'
+                G = 77.2; %GPa
+
+            case '302 stainless wire A313'
+                G = 69.0; %GPa
+
+            case 'Phosphor-bronze wire B159'
+                G = 41.4; %GPa
+        end
+
+        springRate = d^4 * G / (8 * D^3 * Na); %k
+
+    end
+
  %% Display the results in a new figure
     function displayResultsFigure(totalCoils, activeCoils, pitch)
         % Create a new figure
-        clf(resultsFig);
         resultsFig = uifigure('Name', 'Spring Results', 'Position', [600, 300, 300, 150]);
+        clf(resultsFig);
 
         % Create uicontrols to display the results
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 100, 250, 20], 'String', ['Total Coils: ' num2str(totalCoils)]);
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 70, 250, 20], 'String', ['Active Coils: ' num2str(activeCoils)]);
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 40, 250, 20], 'String', ['Pitch: ' num2str(pitch)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 100, 250, 20], 'String', ['Total Coils (Nt): ' num2str(totalCoils)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 70, 250, 20], 'String', ['Active Coils (Na): ' num2str(activeCoils)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 40, 250, 20], 'String', ['Pitch (p): ' num2str(pitch)]);
     end
 end

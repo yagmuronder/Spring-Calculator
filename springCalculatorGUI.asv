@@ -1,6 +1,6 @@
 function springCalculatorGUI
     % Create the main figure
-    fig = uifigure('Name', 'Spring Calculator', 'Position', [400, 300, 400, 275]);
+    fig = uifigure('Name', 'Spring Calculator', 'Position', [100, 100, 750, 275]);
     %100, 100, 600, 400 - left, bottom, width, height
 
     % Create UI components
@@ -12,6 +12,9 @@ function springCalculatorGUI
     materialLabel = uilabel(fig, 'Text', 'Material:', 'Position', [20, 200, 100, 22]);
     materialDropDown = uidropdown(fig, 'Items', {'', 'Music wire A228', 'Hard-drawn wire A227', 'Chrome-vanadium wire A232', 'Chrome-silicon wire A401', '302 stainless wire A313', 'Phosphor-bronze wire B159'}, 'Position', [120, 200, 100, 22]);
 
+    % Table for material information
+    materialInfoTable = uitable(fig, 'Data', {}, 'ColumnName', {'Material', 'Elastic Limit, Percent of Sut (Tension)', 'Elastic Modulus, E (GPa)'}, 'Position', [240, 120, 450, 100]);
+    
     % WIRE DIAMETER
     wireDiameterLabel = uilabel(fig, 'Text', 'Wire Diameter (mm):', 'Position', [20, 160, 120, 22]);
     wireDiameterEdit = uieditfield(fig, 'numeric', 'Position', [150, 160, 70, 22]);

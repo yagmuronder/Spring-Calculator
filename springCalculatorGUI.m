@@ -66,7 +66,7 @@ function springCalculatorGUI
         errordlg('Invalid Solid Length. Please enter a positive value.', 'Error', 'modal');
         return;
     end
-    
+
         % Call other functions to calculate and display results
         %use round to ensure the outcome is an integer 
         totalCoils = round(calculateTotalCoils(endType, wireDiameter, solidLength));
@@ -208,7 +208,7 @@ function springCalculatorGUI
 % the factor of safety for static yielding when the spring is compressed to solid length
 % For a static load, the Spring Calculator should find the factor of safety.
 % For a cyclic load (i.e., Fmax and Fmin), the Spring Calculator should find the factor of safety for infinite life.
-
+% but are we given a cyclic load? we only know the static load from the force needed to compress the spring to its solid length 
 
  %% Display the results in a new figure
     function displayResultsFigure(totalCoils, activeCoils, pitch, springRate, force)

@@ -1,3 +1,8 @@
+%%edits
+%add test cases for inputs (if people put in zero or weird numbers) 
+
+%%
+
 function springCalculatorGUI
     %% Create the main figure
     fig = uifigure('Name', 'Spring Calculator', 'Position', [400, 300, 400, 275]); %left, bottom, width, height
@@ -153,15 +158,19 @@ function springCalculatorGUI
                 end
 
             case 'Chrome-vanadium wire A232' 
+                %Table 10-5 Shigley
                 G = 77.2; %GPa
 
             case 'Chrome-silicon wire A401'
+                %Table 10-5 Shigley
                 G = 77.2; %GPa
 
             case '302 stainless wire A313'
+                %Table 10-5 Shigley
                 G = 69.0; %GPa
 
             case 'Phosphor-bronze wire B159'
+                %Table 10-5 Shigley
                 G = 41.4; %GPa
         end
 

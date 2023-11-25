@@ -1,8 +1,3 @@
-%%edits
-%add test cases for inputs (if people put in zero or weird numbers) 
-
-%%
-
 function springCalculatorGUI
     %% Create the main figure
     fig = uifigure('Name', 'Spring Calculator', 'Position', [400, 300, 400, 275]); %left, bottom, width, height
@@ -50,15 +45,38 @@ function springCalculatorGUI
             return;  % Exit the function if not selected
         end
 
+         % Verification check for numeric values
+    if ~isnumeric(wireDiameter) || ~isnumeric(outerDiameter) || ~isnumeric(freeLength) || ~isnumeric(solidLength)
+        errordlg('Please enter numeric values for diameters and lengths', 'Error', 'modal');
+        return;
+    end
+
+    % Additional verification checks 
+    if wireDiameter <= 0 
+        errordlg('Invalid wire diameter. Please enter a positive value.', 'Error', 'modal');
+        return;
+    end
+
+    if freeLength <= solidLength || freeLength <= 0
+        errordlg('Invalid Free Length. Please enter a positive value greater than Solid Length.', 'Error', 'modal');
+        return;
+    end
+
+    if solidLength <= 0
+        errordlg('Invalid Solid Length. Please enter a positive value.', 'Error', 'modal');
+        return;
+    end
+
         % Call other functions to calculate and display results
         %use round to ensure the outcome is an integer 
         totalCoils = round(calculateTotalCoils(endType, wireDiameter, solidLength));
         activeCoils = round(calculateActiveCoils(endType, totalCoils));
         pitch = calculatePitch(totalCoils, freeLength, wireDiameter, endType);
         springRate = calculateSpringRate(wireDiameter, outerDiameter, activeCoils, material);
+        force = calculateForce(freeLength, solidLength, springRate);
 
         % Display the results in a new figure
-        displayResultsFigure(totalCoils, activeCoils, pitch, springRate);
+        displayResultsFigure(totalCoils, activeCoils, pitch, springRate, force);
     end
 
     %% calculate total coils - Shigley Table 10-1
@@ -178,24 +196,32 @@ function springCalculatorGUI
 
     end
 
-%% calculate force 
+%% calculate force - The force needed to compress the spring to its solid length 
+    function force = calculateForce(L0, Ls, k)
+        force = k * (L0 - Ls);
+
+    end
+%% calculate factor of safety 
+
+
 % UNCOMPLETED 
 %FROM PDF: 
-% — The force needed to compress the spring to its solid length and the factor of safety for static yielding
-% when the spring is compressed to this length
+% the factor of safety for static yielding when the spring is compressed to solid length
 % For a static load, the Spring Calculator should find the factor of safety.
 % For a cyclic load (i.e., Fmax and Fmin), the Spring Calculator should find the factor of safety for infinite life.
 
+%force needed to compress spring to solid length -> F = ky
  %% Display the results in a new figure
-    function displayResultsFigure(totalCoils, activeCoils, pitch, springRate)
+    function displayResultsFigure(totalCoils, activeCoils, pitch, springRate, force)
         % Create a new figure
-        resultsFig = uifigure('Name', 'Spring Results', 'Position', [600, 300, 300, 150]);
+        resultsFig = uifigure('Name', 'Spring Results', 'Position', [600, 300, 800, 150]);
         clf(resultsFig);
 
         % Create uicontrols to display the results
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 100, 250, 20], 'String', ['Total Coils, Nt: ' num2str(totalCoils)]);
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 70, 250, 20], 'String', ['Active Coils, Na: ' num2str(activeCoils)]);
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 40, 250, 20], 'String', ['Pitch, p [mm]: ' num2str(pitch)]);
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 10, 250, 20], 'String', ['Spring Rate, k [N/m]: ' num2str(springRate)]); %check units in the function 
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 100, 600, 20], 'String', ['Total Coils, Nt: ' num2str(totalCoils)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 70, 600, 20], 'String', ['Active Coils, Na: ' num2str(activeCoils)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 40, 600, 20], 'String', ['Pitch, p [mm]: ' num2str(pitch)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 10, 600, 20], 'String', ['Spring Rate, k [N/m]: ' num2str(springRate)]); %check units in the function 
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 10, 600, 20], 'String', ['Force needed to compress spring to solid length, F [N/m]: ' num2str(force)]); %check units in the function 
     end
 end

@@ -201,8 +201,6 @@ function springCalculatorGUI
         force = k * (L0 - Ls); %F=kx
     end
 %% calculate factor of safety 
-
-
 % UNCOMPLETED 
 %FROM PDF: 
 % the factor of safety for static yielding when the spring is compressed to solid length

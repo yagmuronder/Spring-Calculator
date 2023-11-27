@@ -215,10 +215,10 @@ function springCalculatorGUI
         clf(resultsFig);
 
         % Create uicontrols to display the results
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 100, 600, 20], 'String', ['Total Coils, Nt: ' num2str(totalCoils)]);
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 70, 600, 20], 'String', ['Active Coils, Na: ' num2str(activeCoils)]);
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 40, 600, 20], 'String', ['Pitch, p [mm]: ' num2str(pitch)]);
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 10, 600, 20], 'String', ['Spring Rate, k [N/m]: ' num2str(springRate)]); %check units in the function 
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 10, 600, 20], 'String', ['Force needed to compress spring to solid length, F [N/m]: ' num2str(force)]); %check units in the function 
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 130, 700, 20], 'String', ['Total Coils, Nt: ' num2str(totalCoils)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 100, 700, 20], 'String', ['Active Coils, Na: ' num2str(activeCoils)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 70, 700, 20], 'String', ['Pitch, p [mm]: ' num2str(pitch)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 40, 700, 20], 'String', ['Spring Rate, k [N/m]: ' num2str(springRate)]); %check units in the function 
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 10, 700, 20], 'String', ['Force needed to compress spring to solid length, F [N/m]: ' num2str(force)]); %check units in the function 
     end
 end

@@ -51,19 +51,39 @@ function springCalculatorGUI
         return;
     end
 
-    % Additional verification checks 
-    if wireDiameter <= 0 
+    % Wire diameter verification
+    if wireDiameter < 0 
         errordlg('Invalid wire diameter. Please enter a positive value.', 'Error', 'modal');
         return;
-    end
-
-    if freeLength <= solidLength || freeLength <= 0
-        errordlg('Invalid Free Length. Please enter a positive value greater than Solid Length.', 'Error', 'modal');
+    elseif wireDiameter == 0
+        errordlg('Invalid wire diameter. Please enter a positive, non-zero value.', 'Error', 'modal');
         return;
     end
 
-    if solidLength <= 0
+    % Outer diameter verification
+    if outerDiameter < 0 
+        errordlg('Invalid outer diameter. Please enter a positive value.', 'Error', 'modal');
+        return;
+    elseif outerDiameter == 0
+        errordlg('Invalid outer diameter. Please enter a positive, non-zero value.', 'Error', 'modal');
+        return;
+    end
+
+    % Free length verification
+    if freeLength <= solidLength || freeLength < 0
+        errordlg('Invalid Free Length. Please enter a positive value greater than Solid Length.', 'Error', 'modal');
+        return;
+    elseif freeLength == 0
+        errordlg('Invalid Free Length. Please enter a non-zero, positive value greater than Solid Length', 'Error', 'modal');
+        return;
+    end
+
+    % Solid length verification
+    if solidLength < 0
         errordlg('Invalid Solid Length. Please enter a positive value.', 'Error', 'modal');
+        return;
+    elseif solidLength == 0
+        errordlg('Invalid Solid Length. Please enter a non-zero, positive value.', 'Error', 'modal');
         return;
     end
 
@@ -71,7 +91,7 @@ function springCalculatorGUI
         %use round to ensure the outcome is an integer 
         totalCoils = round(calculateTotalCoils(endType, wireDiameter, solidLength));
         activeCoils = round(calculateActiveCoils(endType, totalCoils));
-        pitch = calculatePitch(totalCoils, freeLength, wireDiameter, endType);
+        pitch = calculatePitch(activeCoils, freeLength, wireDiameter, endType);
         springRate = calculateSpringRate(wireDiameter, outerDiameter, activeCoils, material);
         force = calculateForce(freeLength, solidLength, springRate);
 
@@ -101,23 +121,23 @@ function springCalculatorGUI
     end
 
     %% calculate active coils - Shigley Table 10-1
-    function activeCoils = calculateActiveCoils(endType, Na)
+    function activeCoils = calculateActiveCoils(endType, Nt)
             % Default value, in case the end type is not recognized
             activeCoils = 0;
         
             % Use a switch statement to handle different end types
             switch endType
                 case 'Plain' 
-                    activeCoils = Na;
+                    activeCoils = Nt;
                     
                 case 'Plain and ground'
-                    activeCoils = Na - 1;
+                    activeCoils = Nt - 1;
     
                 case 'Squared or closed' 
-                    activeCoils = Na - 2; 
+                    activeCoils = Nt - 2; 
 
                 case 'Squared and ground'
-                    activeCoils = Na - 2; 
+                    activeCoils = Nt - 2; 
             end
     end
 
@@ -147,7 +167,7 @@ function springCalculatorGUI
         springRate = 0;
 
         %Do = outer diameter
-        D = (d + Do)/2; %mean diameter of the spring
+        D = Do - d; %mean diameter of the spring
 
         % Use a switch statement to handle different materials 
         switch material

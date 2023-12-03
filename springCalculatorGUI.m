@@ -420,7 +420,6 @@ function springCalculatorGUI
     uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 120, 400, 20], 'String', ['Force needed to compress spring, F [N]: ' num2str(force)]);
     uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 90, 400, 20], 'String', ['Associated FOS with Force needed to compress spring: ' num2str(force_FOS)]);
 
-    
     % Display Factor of Safety
     if fMin == 0
         uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 60, 400, 20], 'String', ['Factor of Safety (static): ' num2str(fos)]);

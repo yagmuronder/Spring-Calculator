@@ -366,17 +366,17 @@ function springCalculatorGUI
 
             case '302 stainless wire A313'
                 %Table 10-4 Shigley
-                if d < 0.10
+                if d < 2.5
                     A = 1867;
                     m = 0.146;                    
-                elseif d < 0.20
+                elseif d < 5
                     A = 2065;
                     m = 0.263;                 
-                elseif d <= 0.40
+                elseif d <= 10
                     A = 2911;
                     m = 0.478;
                 end
-
+                
             case 'Phosphor-bronze wire B159'
                 %Table 10-4 Shigley
                 if d < 0.6

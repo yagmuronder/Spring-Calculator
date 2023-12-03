@@ -282,34 +282,40 @@ function springCalculatorGUI
                 %Table 10-4 Shigley
                 A = 2211; %MPa * mm^m
                 m = 0.145; %exponent
+                elasticpercent = .65;
                 
             case 'Hard-drawn wire A227'
                 %Table 10-4 Shigley
                 A = 1783; %MPa * mm^m
                 m = 0.190; %exponent
+                elasticpercent = .60;
+
 
             case 'Chrome-vanadium wire A232' 
                 %Table 10-4 Shigley
                 A = 2005; %MPa * mm^m
                 m = 0.168; %exponent
+                elasticpercent = .88;
 
             case 'Chrome-silicon wire A401'
                 %Table 10-4 Shigley
                 A = 1974; %MPa * mm^m
                 m = 0.108; %exponent
+                elasticpercent = .85;
 
             case '302 stainless wire A313'
                 %Table 10-4 Shigley
-                if d < 0.10
+                if d < 2.5
                     A = 1867;
                     m = 0.146;                    
-                elseif d < 0.20
+                elseif d < 5
                     A = 2065;
                     m = 0.263;                 
-                elseif d <= 0.40
+                elseif d <= 10
                     A = 2911;
                     m = 0.478;
                 end
+                elasticpercent = .65;
 
             case 'Phosphor-bronze wire B159'
                 %Table 10-4 Shigley
@@ -323,10 +329,11 @@ function springCalculatorGUI
                     A = 932;
                     m = 0.064;
                 end
+                elasticpercent = .75;
         end
 
         S_ut = A / (d^m);
-        S_sy = 0.45*S_ut; 
+        S_sy = elasticpercent*S_ut; 
         tao = 8*F*D/(pi*d^3) + 4*F/(pi*d^2);
         fos_static = S_sy / tao;
     end
@@ -415,16 +422,18 @@ function springCalculatorGUI
     % Create uicontrols to display the results
     uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 120, 300, 20], 'String', ['Total Coils, Nt: ' num2str(totalCoils)]);
     uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 90, 300, 20], 'String', ['Active Coils, Na: ' num2str(activeCoils)]);
-    uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 60, 300, 20], 'String', ['Pitch, p [mm]: ' num2str(pitch)]);
-    uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 30, 300, 20], 'String', ['Spring Rate, k [N/m]: ' num2str(springRate)]);
-    uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 120, 400, 20], 'String', ['Force needed to compress spring, F [N]: ' num2str(force)]);
-    uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 90, 400, 20], 'String', ['Associated FOS with Force needed to compress spring: ' num2str(force_FOS)]);
-
-    % Display Factor of Safety
+    uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 60, 300, 20], 'String', ['Pitch, p [mm]: ' sprintf('%.3f', pitch)]);
+    uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 30, 300, 20], 'String', ['Spring Rate, k [N/m]: ' sprintf('%.3f', springRate)]);
+    uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 120, 400, 20], 'String', ['Force needed to compress spring, F [N]: ' sprintf('%.3f', force)]);
+    uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 90, 400, 20], 'String', ['Associated FOS with Force needed to compress spring: ' sprintf('%.1f', force_FOS)]);
+    
+    % Display Factor of Safety with one decimal place
     if fMin == 0
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 60, 400, 20], 'String', ['Factor of Safety (static): ' num2str(fos)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 60, 400, 20], 'String', ['Factor of Safety (static): ' sprintf('%.1f', fos)]);
     else
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 60, 400, 20], 'String', ['Factor of Safety (inf life): ' num2str(fos)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 60, 400, 20], 'String', ['Factor of Safety (inf life): ' sprintf('%.1f', fos)]);
     end
-    end
+    
+
+end
 end

@@ -217,7 +217,7 @@ function springCalculatorGUI
 
 %% calculate spring rate k 
     function springRate = calculateSpringRate(d, Do, Na, material)
-        springRate = 0;
+        %springRate = 0;
 
         %Do = outer diameter
         D = Do - d; %mean diameter of the spring
@@ -226,7 +226,7 @@ function springCalculatorGUI
         switch material
             case 'Music wire A228'
                 %Table 10-5 Shigley
-                if d < 0.8128
+                if d < 0.8128 % converted to mm 
                     G = 82.7; %Gpa
                 elseif d < 1.6256
                     G = 81.7; %GPa
@@ -265,7 +265,7 @@ function springCalculatorGUI
                 G = 41.4; %GPa
         end
 
-        springRate = d^4 * G / (8 * D^3 * Na); %k
+        springRate = (d/1000)^4 * (G*10^9) / (8 * (D/1000)^3 * Na); %k
 
     end
 

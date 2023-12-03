@@ -271,7 +271,7 @@ function springCalculatorGUI
 
 %% calculate force - The force needed to compress the spring to its solid length 
     function force = calculateForce(L0, Ls, k)
-        force = k * (L0 - Ls); %F=kx
+        force = k * ((L0 - Ls)/1000); %F=kx
     end
 %% calculate factor of safety - STATIC
 
@@ -417,13 +417,15 @@ function springCalculatorGUI
     uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 90, 300, 20], 'String', ['Active Coils, Na: ' num2str(activeCoils)]);
     uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 60, 300, 20], 'String', ['Pitch, p [mm]: ' num2str(pitch)]);
     uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 30, 300, 20], 'String', ['Spring Rate, k [N/m]: ' num2str(springRate)]);
-    uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 120, 400, 20], 'String', ['Force needed to compress spring, F [N]: ' num2str(force) '& its associated FOS: ' num2str(force_FOS)]);
+    uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 120, 400, 20], 'String', ['Force needed to compress spring, F [N]: ' num2str(force)]);
+    uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 90, 400, 20], 'String', ['Associated FOS with Force needed to compress spring: ' num2str(force_FOS)]);
+
     
     % Display Factor of Safety
     if fMin == 0
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 90, 400, 20], 'String', ['Factor of Safety (static): ' num2str(fos)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 60, 400, 20], 'String', ['Factor of Safety (static): ' num2str(fos)]);
     else
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 90, 400, 20], 'String', ['Factor of Safety (inf life): ' num2str(fos)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 60, 400, 20], 'String', ['Factor of Safety (inf life): ' num2str(fos)]);
     end
     end
 end

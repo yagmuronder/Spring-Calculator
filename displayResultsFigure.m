@@ -10,19 +10,19 @@
         % Check if the units are in English and perform conversions if needed
     if strcmp(units, 'English')
         convertToEnglish_length = @(value) value / 25.4;  % from m to inches
-        convertToEnglish_springRate = @(value) value * 5.71015; % from N/m to lbf/in
-        convertToEnglish_force = @(value) value * 0.22581; %from newtons to pound force 
+        convertToEnglish_springRate = @(value) value * 0.00571; % from N/m to lbf/in
+        convertToEnglish_force = @(value) value * 0.224809; %from newtons to pound force 
         
         % Convert results to English units (replace with your conversion logic)
         pitch = convertToEnglish_length(pitch);
         springRate = convertToEnglish_springRate(springRate);
         force = convertToEnglish_force(force);
 
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 60, 300, 20], 'String', ['Pitch, p [in]: ' sprintf('%.3f', pitch)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 60, 300, 20], 'String', ['Pitch, p [in]: ' sprintf('%.4f', pitch)]);
         uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 30, 300, 20], 'String', ['Spring Rate, k [lbf/in]: ' sprintf('%.3f', springRate)]);
         uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 120, 400, 20], 'String', ['Force needed to compress spring, F [lbf]: ' sprintf('%.3f', force)]);
     else 
-        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 60, 300, 20], 'String', ['Pitch, p [mm]: ' sprintf('%.3f', pitch)]);
+        uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 60, 300, 20], 'String', ['Pitch, p [mm]: ' sprintf('%.4f', pitch)]);
         uicontrol(resultsFig, 'Style', 'text', 'Position', [20, 30, 300, 20], 'String', ['Spring Rate, k [N/m]: ' sprintf('%.3f', springRate)]);
         uicontrol(resultsFig, 'Style', 'text', 'Position', [400, 120, 400, 20], 'String', ['Force needed to compress spring, F [N]: ' sprintf('%.3f', force)]);
     end

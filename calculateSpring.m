@@ -69,7 +69,7 @@
     if strcmp(units, 'English')
         % Convert to mm from inches and pounds based on Michael's test case
         convertToMetric_length = @(value) value * 25.4;  % from inches to mm
-        convertToMetric_force = @(value) value * 0.22581; %conversion factor for newtons to pound force 
+        convertToMetric_force = @(value) value * 4.44822; %from pound force to newtons
 
         wireDiameter = convertToMetric_length(wireDiameter);
         solidLength = convertToMetric_length(solidLength);

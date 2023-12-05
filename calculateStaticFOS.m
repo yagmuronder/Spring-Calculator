@@ -7,25 +7,25 @@
                 %Table 10-4 Shigley
                 A = 2211; %MPa * mm^m
                 m = 0.145; %exponent
-                elasticpercent = .65;
+                elasticpercent = .45;
                 
             case 'Hard-drawn wire A227'
                 %Table 10-4 Shigley
                 A = 1783; %MPa * mm^m
                 m = 0.190; %exponent
-                elasticpercent = .60;
+                elasticpercent = .45;
 
             case 'Chrome-vanadium wire A232' 
                 %Table 10-4 Shigley
                 A = 2005; %MPa * mm^m
                 m = 0.168; %exponent
-                elasticpercent = .88;
+                elasticpercent = .65;
 
             case 'Chrome-silicon wire A401'
                 %Table 10-4 Shigley
                 A = 1974; %MPa * mm^m
                 m = 0.108; %exponent
-                elasticpercent = .85;
+                elasticpercent = .65;
 
             case '302 stainless wire A313'
                 %Table 10-4 Shigley
@@ -39,7 +39,7 @@
                     A = 2911;
                     m = 0.478;
                 end
-                elasticpercent = .65;
+                elasticpercent = .45;
 
             case 'Phosphor-bronze wire B159'
                 %Table 10-4 Shigley
@@ -53,7 +53,7 @@
                     A = 932;
                     m = 0.064;
                 end
-                elasticpercent = .75;
+                elasticpercent = .45;
         end
 
         S_ut = A / (d^m);

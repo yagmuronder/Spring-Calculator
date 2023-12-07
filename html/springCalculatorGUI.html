@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>springCalculatorGUI</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2023-12-07">
+<meta name="DC.source" content="springCalculatorGUI.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<pre class="codeinput">
+<span class="keyword">function</span> springCalculatorGUI
+    <span class="comment">% Create the main figure</span>
+    fig = uifigure(<span class="string">'Name'</span>, <span class="string">'Spring Calculator'</span>, <span class="string">'Position'</span>, [400, 360, 400, 400]); <span class="comment">% left, bottom, width, height</span>
+
+    <span class="comment">% Create UI components</span>
+
+    <span class="comment">% END TYPE</span>
+    endTypeLabel = uilabel(fig, <span class="string">'Text'</span>, <span class="string">'End Type:'</span>, <span class="string">'Position'</span>, [20, 330, 80, 22]);
+    endTypeDropDown = uidropdown(fig, <span class="string">'Items'</span>, {<span class="string">''</span>, <span class="string">'Plain'</span>, <span class="string">'Plain and ground'</span>, <span class="string">'Squared or closed'</span>, <span class="string">'Squared and ground'</span> }, <span class="string">'Position'</span>, [120, 330, 120, 22]);
+
+    <span class="comment">% MATERIAL</span>
+    materialLabel = uilabel(fig, <span class="string">'Text'</span>, <span class="string">'Material:'</span>, <span class="string">'Position'</span>, [20, 300, 80, 22]);
+    materialDropDown = uidropdown(fig, <span class="string">'Items'</span>, {<span class="string">''</span>, <span class="string">'Music wire A228'</span>, <span class="string">'Hard-drawn wire A227'</span>, <span class="string">'Chrome-vanadium wire A232'</span>, <span class="string">'Chrome-silicon wire A401'</span>, <span class="string">'302 stainless wire A313'</span>, <span class="string">'Phosphor-bronze wire B159'</span>}, <span class="string">'Position'</span>, [120, 300, 200, 22]);
+
+    <span class="comment">% Units Dropdown</span>
+    unitsLabel = uilabel(fig, <span class="string">'Text'</span>, <span class="string">'Units:'</span>, <span class="string">'Position'</span>, [20, 270, 50, 22]);
+    unitsDropDown = uidropdown(fig, <span class="string">'Items'</span>, {<span class="string">'Metric'</span>, <span class="string">'English'</span>}, <span class="string">'Position'</span>, [80, 270, 80, 22]);
+
+    <span class="comment">% WIRE DIAMETER</span>
+    wireDiameterLabel = uilabel(fig, <span class="string">'Text'</span>, <span class="string">'Wire Diameter (mm/in):'</span>, <span class="string">'Position'</span>, [20, 240, 120, 22]);
+    wireDiameterEdit = uieditfield(fig, <span class="string">'numeric'</span>, <span class="string">'Position'</span>, [150, 240, 70, 22]);
+
+    <span class="comment">% OUTER DIAMETER</span>
+    outerDiameterLabel = uilabel(fig, <span class="string">'Text'</span>, <span class="string">'Outer Diameter (mm/in):'</span>, <span class="string">'Position'</span>, [20, 210, 120, 22]);
+    outerDiameterEdit = uieditfield(fig, <span class="string">'numeric'</span>, <span class="string">'Position'</span>, [150, 210, 70, 22]);
+
+    <span class="comment">% FREE LENGTH</span>
+    freeLengthLabel = uilabel(fig, <span class="string">'Text'</span>, <span class="string">'Free Length (mm/in):'</span>, <span class="string">'Position'</span>, [20, 180, 120, 22]);
+    freeLengthEdit = uieditfield(fig, <span class="string">'numeric'</span>, <span class="string">'Position'</span>, [150, 180, 70, 22]);
+
+    <span class="comment">% SOLID LENGTH</span>
+    solidLengthLabel = uilabel(fig, <span class="string">'Text'</span>, <span class="string">'Solid Length (mm/in):'</span>, <span class="string">'Position'</span>, [20, 150, 120, 22]);
+    solidLengthEdit = uieditfield(fig, <span class="string">'numeric'</span>, <span class="string">'Position'</span>, [150, 150, 70, 22]);
+
+    <span class="comment">% Input Fmin and Fmax</span>
+    fMinLabel = uilabel(fig, <span class="string">'Text'</span>, <span class="string">'Fmin [N/lbf] (write 0 if static load is applied):'</span>, <span class="string">'Position'</span>, [20, 120, 250, 22]);
+    fMaxLabel = uilabel(fig, <span class="string">'Text'</span>, <span class="string">'Fmax [N/lbf]:'</span>, <span class="string">'Position'</span>, [20, 90, 120, 22]);
+    fMinEdit = uieditfield(fig, <span class="string">'numeric'</span>, <span class="string">'Position'</span>, [250, 120, 70, 22]);
+    fMaxEdit = uieditfield(fig, <span class="string">'numeric'</span>, <span class="string">'Position'</span>, [150, 90, 70, 22]);
+
+    <span class="comment">% Peening Status</span>
+    peeningStatusLabel = uilabel(fig, <span class="string">'Text'</span>, <span class="string">'Peening Status:'</span>, <span class="string">'Position'</span>, [20, 60, 120, 22]);
+    peeningStatusDropDown = uidropdown(fig, <span class="string">'Items'</span>, {<span class="string">''</span>, <span class="string">'Peened'</span>, <span class="string">'Unpeened'</span>}, <span class="string">'Position'</span>, [150, 60, 100, 22]);
+
+    calculateButton = uibutton(fig, <span class="string">'push'</span>, <span class="string">'Text'</span>, <span class="string">'Calculate'</span>, <span class="string">'Position'</span>, [250, 20, 100, 40], <span class="keyword">...</span>
+    <span class="string">'ButtonPushedFcn'</span>, @(btn, event) calculateSpring(<span class="keyword">...</span>
+        endTypeDropDown.Value, materialDropDown.Value, unitsDropDown.Value,wireDiameterEdit.Value, <span class="keyword">...</span>
+        outerDiameterEdit.Value, freeLengthEdit.Value, solidLengthEdit.Value, <span class="keyword">...</span>
+        fMinEdit.Value, fMaxEdit.Value, peeningStatusDropDown.Value));
+
+<span class="keyword">end</span>
+</pre>
+<img vspace="5" hspace="5" src="springCalculatorGUI_01.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+function springCalculatorGUI
+    % Create the main figure
+    fig = uifigure('Name', 'Spring Calculator', 'Position', [400, 360, 400, 400]); % left, bottom, width, height
+
+    % Create UI components
+
+    % END TYPE
+    endTypeLabel = uilabel(fig, 'Text', 'End Type:', 'Position', [20, 330, 80, 22]);
+    endTypeDropDown = uidropdown(fig, 'Items', {'', 'Plain', 'Plain and ground', 'Squared or closed', 'Squared and ground' }, 'Position', [120, 330, 120, 22]);
+
+    % MATERIAL
+    materialLabel = uilabel(fig, 'Text', 'Material:', 'Position', [20, 300, 80, 22]);
+    materialDropDown = uidropdown(fig, 'Items', {'', 'Music wire A228', 'Hard-drawn wire A227', 'Chrome-vanadium wire A232', 'Chrome-silicon wire A401', '302 stainless wire A313', 'Phosphor-bronze wire B159'}, 'Position', [120, 300, 200, 22]);
+
+    % Units Dropdown
+    unitsLabel = uilabel(fig, 'Text', 'Units:', 'Position', [20, 270, 50, 22]);
+    unitsDropDown = uidropdown(fig, 'Items', {'Metric', 'English'}, 'Position', [80, 270, 80, 22]);
+
+    % WIRE DIAMETER
+    wireDiameterLabel = uilabel(fig, 'Text', 'Wire Diameter (mm/in):', 'Position', [20, 240, 120, 22]);
+    wireDiameterEdit = uieditfield(fig, 'numeric', 'Position', [150, 240, 70, 22]);
+
+    % OUTER DIAMETER
+    outerDiameterLabel = uilabel(fig, 'Text', 'Outer Diameter (mm/in):', 'Position', [20, 210, 120, 22]);
+    outerDiameterEdit = uieditfield(fig, 'numeric', 'Position', [150, 210, 70, 22]);
+
+    % FREE LENGTH 
+    freeLengthLabel = uilabel(fig, 'Text', 'Free Length (mm/in):', 'Position', [20, 180, 120, 22]);
+    freeLengthEdit = uieditfield(fig, 'numeric', 'Position', [150, 180, 70, 22]);
+
+    % SOLID LENGTH 
+    solidLengthLabel = uilabel(fig, 'Text', 'Solid Length (mm/in):', 'Position', [20, 150, 120, 22]);
+    solidLengthEdit = uieditfield(fig, 'numeric', 'Position', [150, 150, 70, 22]);
+
+    % Input Fmin and Fmax
+    fMinLabel = uilabel(fig, 'Text', 'Fmin [N/lbf] (write 0 if static load is applied):', 'Position', [20, 120, 250, 22]);
+    fMaxLabel = uilabel(fig, 'Text', 'Fmax [N/lbf]:', 'Position', [20, 90, 120, 22]);
+    fMinEdit = uieditfield(fig, 'numeric', 'Position', [250, 120, 70, 22]);
+    fMaxEdit = uieditfield(fig, 'numeric', 'Position', [150, 90, 70, 22]);
+
+    % Peening Status
+    peeningStatusLabel = uilabel(fig, 'Text', 'Peening Status:', 'Position', [20, 60, 120, 22]);
+    peeningStatusDropDown = uidropdown(fig, 'Items', {'', 'Peened', 'Unpeened'}, 'Position', [150, 60, 100, 22]);
+
+    calculateButton = uibutton(fig, 'push', 'Text', 'Calculate', 'Position', [250, 20, 100, 40], ...
+    'ButtonPushedFcn', @(btn, event) calculateSpring(...
+        endTypeDropDown.Value, materialDropDown.Value, unitsDropDown.Value,wireDiameterEdit.Value, ...
+        outerDiameterEdit.Value, freeLengthEdit.Value, solidLengthEdit.Value, ...
+        fMinEdit.Value, fMaxEdit.Value, peeningStatusDropDown.Value));
+
+end
+##### SOURCE END #####
+-->
+</body>
+</html>

@@ -17,12 +17,12 @@ function springCalculatorGUI
     unitsDropDown = uidropdown(fig, 'Items', {'Metric', 'English'}, 'Position', [80, 270, 80, 22]);
 
     % WIRE DIAMETER
-    wireDiameterLabel = uilabel(fig, 'Text', 'Wire Diameter (mm/in):', 'Position', [20, 240, 120, 22]);
-    wireDiameterEdit = uieditfield(fig, 'numeric', 'Position', [150, 240, 70, 22]);
+    wireDiameterLabel = uilabel(fig, 'Text', 'Wire Diameter (mm/in):', 'Position', [20, 240, 150, 22]);
+    wireDiameterEdit = uieditfield(fig, 'numeric', 'Position', [180, 240, 70, 22]);
 
     % OUTER DIAMETER
-    outerDiameterLabel = uilabel(fig, 'Text', 'Outer Diameter (mm/in):', 'Position', [20, 210, 120, 22]);
-    outerDiameterEdit = uieditfield(fig, 'numeric', 'Position', [150, 210, 70, 22]);
+    outerDiameterLabel = uilabel(fig, 'Text', 'Outer Diameter (mm/in):', 'Position', [20, 210, 150, 22]);
+    outerDiameterEdit = uieditfield(fig, 'numeric', 'Position', [180, 210, 70, 22]);
 
     % FREE LENGTH 
     freeLengthLabel = uilabel(fig, 'Text', 'Free Length (mm/in):', 'Position', [20, 180, 120, 22]);
@@ -43,9 +43,8 @@ function springCalculatorGUI
     peeningStatusDropDown = uidropdown(fig, 'Items', {'', 'Peened', 'Unpeened'}, 'Position', [150, 60, 100, 22]);
 
     calculateButton = uibutton(fig, 'push', 'Text', 'Calculate', 'Position', [250, 20, 100, 40], ...
-    'ButtonPushedFcn', @(btn, event) calculateSpring(...
-        endTypeDropDown.Value, materialDropDown.Value, unitsDropDown.Value,wireDiameterEdit.Value, ...
+        'ButtonPushedFcn', @(btn, event) calculateSpring(...
+        endTypeDropDown.Value, materialDropDown.Value, unitsDropDown.Value, wireDiameterEdit.Value, ...
         outerDiameterEdit.Value, freeLengthEdit.Value, solidLengthEdit.Value, ...
         fMinEdit.Value, fMaxEdit.Value, peeningStatusDropDown.Value));
-
 end

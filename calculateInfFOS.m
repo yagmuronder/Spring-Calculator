@@ -69,8 +69,12 @@
 
         end
 
-        S_se = S_sa / (1-S_sm/S_su);
+        S_se = S_sa / (1 - S_sm/S_su);
+        
+        middleStep = (tao_a / S_se + tao_m / S_su);
+        fos_inf = 1/middleStep;
 
-        fos_inf = (tao_a / S_se + tao_m / S_su)^(-1);
+        %fos_inf = (tao_a / S_se + tao_m / S_su)^(-1);
+        
         
     end
